@@ -86,7 +86,6 @@ class _DragAndDropListState extends State<DragAndDropList> {
   }
 
   void populateRowList() {
-    print('populateRowList');
     rows = [];
     for (int i = 0; i < widget.rowsCount; i++) {
       rows.add(Data(i));
@@ -175,7 +174,6 @@ class _DragAndDropListState extends State<DragAndDropList> {
         dragHeight = draggedHeight;
 
         setState(() {
-          print('rows.removeAt($index)');
           rows.removeAt(index);
         });
       },
@@ -233,7 +231,6 @@ class _DragAndDropListState extends State<DragAndDropList> {
       shouldScrollUp = false;
       data.extraTop = 0.0;
       data.extraBot = 0.0;
-      print('insert back to $index');
       if (_currentMiddle.dy >= _currentScrollPos) {
         widget.onDragFinish(_currentDraggingIndex, index);
       } else {
@@ -308,8 +305,6 @@ class DraggableListItem extends StatelessWidget {
 
   final double dragElevation;
 
-  final Key myKey;
-
   final Widget child;
 
   DraggableListItem({
@@ -333,7 +328,7 @@ class DraggableListItem extends StatelessWidget {
       return _getListChild(context);
     } else {
       return new LongPressMyDraggable<Data>(
-          key: myKey,
+          key: key,
           child: _getListChild(context),
           feedback: _getFeedback(index, context),
           data: data,
