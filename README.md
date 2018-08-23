@@ -2,13 +2,13 @@
 
 a dragable flutter list optimized from [flutter_list_drag_and_drop](https://github.com/Norbert515/flutter_list_drag_and_drop)
 
-- fix flutter_list_drag_and_drop dart verstion support
+- fix flutter_list_drag_and_drop's dart version support
 - optimize data structure and api
 - drag and drop items in List View
 - drag and drop are optional for specific item
 - animate when draging
 
-![](./screenshot.jpg)
+![](./demo.gif)
 
 ## Usage
 
