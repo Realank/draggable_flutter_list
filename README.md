@@ -12,6 +12,8 @@ a dragable flutter list optimized from [flutter_list_drag_and_drop](https://gith
 
 ## Usage
 
+[Pub package](https://pub.dartlang.org/packages/dragable_flutter_list)
+
 ```dart
 import 'package:flutter/material.dart';
 import 'package:dragable_flutter_list/dragable_flutter_list.dart';
