@@ -72,10 +72,10 @@ class MyHomePageState extends State<MyHomePage> {
           items.removeAt(before);
           items.insert(after, data);
         },
-//        canDrag: (index) {
-//          print('can drag $index');
-//          return index != 3; //disable drag for index 3
-//        },
+        canDrag: (index) {
+          print('can drag $index');
+          return index != 3; //disable drag for index 3
+        },
         canBeDraggedTo: (one, two) => true,
         dragElevation: 8.0,
       ),

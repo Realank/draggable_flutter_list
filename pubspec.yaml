@@ -2,7 +2,7 @@ name: dragable_flutter_list
 description: a dragable flutter list optimized from flutter_list_drag_and_drop.
 version: 0.1.0
 author: Realank <realank@126.com> Norbert Kozsir <kozsir.norbert@gmail.com>
-homepage:
+homepage: https://github.com/Realank/dragable_flutter_list
 
 environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
