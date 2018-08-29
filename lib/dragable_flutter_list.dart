@@ -27,17 +27,18 @@ class DragAndDropList extends StatefulWidget {
   // Otherwise, draggable items provide their own elevation/shadow.
   final double dragElevation;
 
-  final ScrollController scrollController = ScrollController();
+  final ScrollController scrollController;
 
-  DragAndDropList(
-    this.rowsCount, {
-    Key key,
-    @required this.itemBuilder,
-    this.onDragFinish,
-    @required this.canBeDraggedTo,
-    this.dragElevation = 0.0,
-    this.canDrag,
-  }) : super(key: key);
+  DragAndDropList(this.rowsCount,
+      {Key key,
+      @required this.itemBuilder,
+      this.onDragFinish,
+      @required this.canBeDraggedTo,
+      this.dragElevation = 0.0,
+      this.canDrag,
+      scrollController})
+      : this.scrollController = scrollController ?? ScrollController(),
+        super(key: key);
 
   @override
   State<StatefulWidget> createState() => new _DragAndDropListState();

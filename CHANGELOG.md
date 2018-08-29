@@ -4,3 +4,4 @@
 ## [0.1.3] - fix key issue
 ## [0.1.4] - fix hints
 ## [0.1.5] - add scroll controller property
+## [0.1.6] - add scroll controller property
