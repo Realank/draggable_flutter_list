@@ -27,6 +27,8 @@ class DragAndDropList extends StatefulWidget {
   // Otherwise, draggable items provide their own elevation/shadow.
   final double dragElevation;
 
+  final ScrollController scrollController = ScrollController();
+
   DragAndDropList(
     this.rowsCount, {
     Key key,
@@ -48,8 +50,6 @@ class _DragAndDropListState extends State<DragAndDropList> {
   bool shouldScrollDown = false;
 
   double _currentScrollPos = 0.0;
-
-  ScrollController scrollController = new ScrollController();
 
   List<Data> rows = new List<Data>();
 
@@ -96,10 +96,10 @@ class _DragAndDropListState extends State<DragAndDropList> {
     if (isScrolling) return;
 
     if (shouldScrollUp) {
-      if (scrollController.position.pixels == 0.0) return;
+      if (widget.scrollController.position.pixels == 0.0) return;
       isScrolling = true;
-      var scrollTo = scrollController.offset - 12.0;
-      scrollController
+      var scrollTo = widget.scrollController.offset - 12.0;
+      widget.scrollController
           .animateTo(scrollTo, duration: new Duration(milliseconds: 74), curve: Curves.linear)
           .then((it) {
         updatePlaceholder();
@@ -110,10 +110,11 @@ class _DragAndDropListState extends State<DragAndDropList> {
       // Scrollable.ensureVisible(context, );
     }
     if (shouldScrollDown) {
-      if (scrollController.position.pixels == scrollController.position.maxScrollExtent) return;
+      if (widget.scrollController.position.pixels ==
+          widget.scrollController.position.maxScrollExtent) return;
       isScrolling = true;
-      var scrollTo = scrollController.offset + 12.0;
-      scrollController
+      var scrollTo = widget.scrollController.offset + 12.0;
+      widget.scrollController
           .animateTo(scrollTo, duration: new Duration(milliseconds: 75), curve: Curves.linear)
           .then((it) {
         updatePlaceholder();
@@ -137,7 +138,7 @@ class _DragAndDropListState extends State<DragAndDropList> {
           itemBuilder: (BuildContext context2, int index) {
             return _getDraggableListItem(context2, index, context3);
           },
-          controller: scrollController,
+          controller: widget.scrollController,
           itemCount: rows.length,
         );
       },
@@ -157,7 +158,7 @@ class _DragAndDropListState extends State<DragAndDropList> {
         _currentDraggingIndex = index;
         RenderBox rend = context3.findRenderObject();
         double start = rend.localToGlobal(new Offset(0.0, 0.0)).dy;
-        double end = rend.localToGlobal(new Offset(0.0, rend.semanticBounds.height)).dy;
+//        double end = rend.localToGlobal(new Offset(0.0, rend.semanticBounds.height)).dy;
 
         didJustStartDragging = true;
         _currentScrollPos = start;
