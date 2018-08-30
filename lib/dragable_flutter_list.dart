@@ -227,7 +227,13 @@ class _DragAndDropListState extends State<DragAndDropList> {
   }
 
   void _accept(int index, Data data) {
-    if (_currentIndex == null || _currentMiddle == null) return;
+    if (_currentIndex == null || _currentMiddle == null) {
+      setState(() {
+        populateRowList();
+      });
+      _complete();
+      return;
+    }
     setState(() {
       shouldScrollDown = false;
       shouldScrollUp = false;
@@ -273,13 +279,9 @@ class _DragAndDropListState extends State<DragAndDropList> {
         it.extraTop = 0.0;
         it.extraBot = 0.0;
       });
-    });
-
-    if (_currentIndex >= rows.length) {
-      return;
-    }
-
-    setState(() {
+      if (_currentIndex >= rows.length) {
+        return;
+      }
       if (_currentScrollPos > _currentMiddle.dy) {
         rows[_currentIndex].extraBot = dragHeight;
         rows[_currentIndex].extraTop = 0.0;
