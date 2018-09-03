@@ -34,10 +34,10 @@ class MyHomePageState extends State<MyHomePage> {
   List<String> items = [
     '0',
     '1',
-    'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+    '2',
     '3',
     '4',
-    'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+    '5',
     '6',
     '7',
     '8',
@@ -67,16 +67,16 @@ class MyHomePageState extends State<MyHomePage> {
           );
         },
         onDragFinish: (before, after) {
-          print('on drag finish $before $after');
           String data = items[before];
           items.removeAt(before);
           items.insert(after, data);
         },
         canDrag: (index) {
-          print('can drag $index');
-          return index != 3; //disable drag for index 3
+          return index < 5; //disable drag for index 3
         },
-        canBeDraggedTo: (one, two) => true,
+        canBeDraggedTo: (from, to) {
+          return to < 5;
+        },
         dragElevation: 8.0,
       ),
     );

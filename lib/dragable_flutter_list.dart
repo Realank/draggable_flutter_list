@@ -183,7 +183,7 @@ class _DragAndDropListState extends State<DragAndDropList> {
         _accept(index, draggedData);
       },
       onAccept: (Data data) {
-        _accept(index, data);
+        _accept(_currentIndex, data);
       },
       onMove: (Offset offset) {
         if (didJustStartDragging) {
@@ -268,9 +268,11 @@ class _DragAndDropListState extends State<DragAndDropList> {
     double middle = buffer - currentChild.size.height / 2;
 
     int index = it.indexOf(currentChild);
+
     if (!widget.canBeDraggedTo(_currentDraggingIndex, index)) return;
 
     _currentMiddle = new Offset(0.0, middle);
+    print('canBeDraggedTo internal $_currentDraggingIndex -》 $index');
     _currentIndex = index;
 
     //TODO not so performant
