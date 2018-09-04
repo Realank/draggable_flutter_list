@@ -1,6 +1,7 @@
 library dragable_flutter_list;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/animation.dart';
 import 'package:flutter/rendering.dart';
 import 'my_draggable.dart';
 
@@ -108,7 +109,7 @@ class _DragAndDropListState extends State<DragAndDropList> {
         _maybeScroll();
       });
       //TODO implement
-      // Scrollable.ensureVisible(context, );
+//       Scrollable.ensureVisible(context, );
     }
     if (shouldScrollDown) {
       if (widget.scrollController.position.pixels ==
@@ -273,14 +274,15 @@ class _DragAndDropListState extends State<DragAndDropList> {
 
     _currentMiddle = new Offset(0.0, middle);
     print('canBeDraggedTo internal $_currentDraggingIndex -》 $index');
-    _currentIndex = index;
 
-    //TODO not so performant
     setState(() {
-      rows.forEach((it) {
-        it.extraTop = 0.0;
-        it.extraBot = 0.0;
-      });
+      //reset placeholder
+      if (_currentIndex != null && _currentIndex < rows.length) {
+        rows[_currentIndex].extraBot = 0.0;
+        rows[_currentIndex].extraTop = 0.0;
+      }
+
+      _currentIndex = index;
       if (_currentIndex >= rows.length) {
         return;
       }
