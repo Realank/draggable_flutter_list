@@ -3,15 +3,9 @@ library dragable_flutter_list;
 import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/rendering.dart';
-import 'my_draggable.dart';
+import 'DraggableListItem.dart';
 
 typedef Widget WidgetMaker<T>(BuildContext context, int index);
-
-typedef void OnDragFinish(int oldIndex, int newIndex);
-
-typedef bool CanAccept(int oldIndex, int newIndex);
-
-typedef bool CanDrag(int index);
 
 class DragAndDropList extends StatefulWidget {
   final int rowsCount;
@@ -62,8 +56,6 @@ class _DragAndDropListState extends State<DragAndDropList> {
   double dragHeight;
 
   SliverMultiBoxAdaptorElement renderSliverContext;
-
-  Data draggedData;
 
   Offset _currentMiddle;
 
@@ -168,7 +160,6 @@ class _DragAndDropListState extends State<DragAndDropList> {
         middleOfItemInGlobalPosition = globalTopPositionOfDraggedItem + draggedHeight / 2;
 
         sliverStartPos = start;
-        draggedData = rows[index];
 
         // _buildOverlay(context2, start, end);
 
@@ -181,10 +172,10 @@ class _DragAndDropListState extends State<DragAndDropList> {
         });
       },
       onDragCompleted: () {
-        _accept(index, draggedData);
+        _accept(index, _currentDraggingIndex);
       },
-      onAccept: (Data data) {
-        _accept(_currentIndex, data);
+      onAccept: (int index) {
+        _accept(_currentIndex, index);
       },
       onMove: (Offset offset) {
         if (didJustStartDragging) {
@@ -209,7 +200,7 @@ class _DragAndDropListState extends State<DragAndDropList> {
         updatePlaceholder();
       },
       cancelCallback: () {
-        _accept(_currentIndex, draggedData);
+        _accept(_currentIndex, _currentDraggingIndex);
       },
     );
     return draggableListItem;
@@ -227,7 +218,7 @@ class _DragAndDropListState extends State<DragAndDropList> {
     middleOfItemInGlobalPosition = 0.0;
   }
 
-  void _accept(int index, Data data) {
+  void _accept(int toIndex, int fromIndex) {
     if (_currentIndex == null || _currentMiddle == null) {
       setState(() {
         populateRowList();
@@ -238,12 +229,12 @@ class _DragAndDropListState extends State<DragAndDropList> {
     setState(() {
       shouldScrollDown = false;
       shouldScrollUp = false;
-      data.extraTop = 0.0;
-      data.extraBot = 0.0;
+      rows[fromIndex].extraTop = 0.0;
+      rows[fromIndex].extraBot = 0.0;
       if (_currentMiddle.dy >= _currentScrollPos) {
-        widget.onDragFinish(_currentDraggingIndex, index);
+        widget.onDragFinish(_currentDraggingIndex, toIndex);
       } else {
-        widget.onDragFinish(_currentDraggingIndex, index + 1);
+        widget.onDragFinish(_currentDraggingIndex, toIndex + 1);
       }
       populateRowList();
     });
@@ -295,107 +286,4 @@ class _DragAndDropListState extends State<DragAndDropList> {
       }
     });
   }
-}
-
-typedef void OnDragStarted(double height, double topPosition);
-
-class DraggableListItem extends StatelessWidget {
-  final Data data;
-  final int index;
-
-  final double draggedHeight;
-  final CanDrag canDrag;
-  final OnDragStarted onDragStarted;
-  final VoidCallback onDragCompleted;
-  final MyDragTargetAccept<Data> onAccept;
-  final ValueChanged<Offset> onMove;
-  final VoidCallback cancelCallback;
-
-  final double dragElevation;
-
-  final Widget child;
-
-  DraggableListItem({
-    Key key,
-    this.data,
-    this.index,
-    this.canDrag,
-    this.onDragStarted,
-    this.onDragCompleted,
-    this.onAccept,
-    this.onMove,
-    this.cancelCallback,
-    this.draggedHeight,
-    this.child,
-    this.dragElevation,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    if (canDrag != null && !(canDrag(index))) {
-      return _getListChild(context);
-    } else {
-      return new LongPressMyDraggable<Data>(
-          key: key,
-          child: _getListChild(context),
-          feedback: _getFeedback(index, context),
-          data: data,
-          onMove: onMove,
-          onDragStarted: () {
-            RenderBox it = context.findRenderObject() as RenderBox;
-            onDragStarted(it.size.height, it.localToGlobal(it.semanticBounds.topCenter).dy);
-          },
-          onDragCompleted: onDragCompleted,
-          onMyDraggableCanceled: (_, _2) {
-            cancelCallback();
-          });
-    }
-  }
-
-  Widget _getListChild(BuildContext context) {
-    return new MyDragTarget<Data>(
-      builder: (BuildContext context, List candidateData, List rejectedData) {
-        return new Column(
-          children: <Widget>[
-            new SizedBox(
-              height: data.extraTop,
-            ),
-            child,
-            new SizedBox(
-              height: data.extraBot,
-            ),
-          ],
-        );
-      },
-      onAccept: onAccept,
-      onWillAccept: (data) {
-        return true;
-      },
-    );
-  }
-
-  Widget _getFeedback(int index, BuildContext context) {
-    var maxWidth = MediaQuery.of(context).size.width;
-    return new ConstrainedBox(
-      constraints: new BoxConstraints(maxWidth: maxWidth),
-      child: new Transform(
-        transform: new Matrix4.rotationZ(0.0),
-        alignment: FractionalOffset.bottomRight,
-        child: new Material(
-          child: child,
-          elevation: dragElevation,
-          color: Colors.transparent,
-          borderRadius: BorderRadius.zero,
-        ),
-      ),
-    );
-  }
-}
-
-class Data {
-  int index;
-  double extraTop;
-  double extraBot;
-
-  Data(this.index, {this.extraTop = 0.0, this.extraBot = 0.0});
 }
