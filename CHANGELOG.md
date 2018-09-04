@@ -9,3 +9,4 @@
 ## [0.1.8] - fix dragging index bug
 ## [0.1.9] - pub.dartlang.org bug, can't analyze, re-submit
 ## [0.2.0] - improve performance
+## [0.2.1] - fix dependencies

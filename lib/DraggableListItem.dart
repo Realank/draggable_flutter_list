@@ -51,7 +51,8 @@ class DraggableListItem extends StatelessWidget {
           onMove: onMove,
           onDragStarted: () {
             RenderBox it = context.findRenderObject() as RenderBox;
-            onDragStarted(it.size.height, it.localToGlobal(it.semanticBounds.topCenter).dy);
+            onDragStarted(it.size.height,
+                it.localToGlobal(it.semanticBounds.topCenter).dy);
           },
           onDragCompleted: onDragCompleted,
           onMyDraggableCanceled: (_, _2) {
