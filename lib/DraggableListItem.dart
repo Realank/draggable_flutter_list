@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'my_draggable.dart';
+import 'tools.dart';
 
 typedef void OnDragStarted(double height, double topPosition);
 typedef void OnDragFinish(int oldIndex, int newIndex);
@@ -42,7 +43,7 @@ class DraggableListItem extends StatelessWidget {
     if (canDrag != null && !(canDrag(index))) {
       return _getListChild(context);
     } else {
-      return new LongPressMyDraggable<Data>(
+      return LongPressMyDraggable<Data>(
           key: key,
           child: _getListChild(context),
           feedback: _getFeedback(index, context),
@@ -60,19 +61,24 @@ class DraggableListItem extends StatelessWidget {
   }
 
   Widget _getListChild(BuildContext context) {
-    final previousExtraHeight = data.previousExtraHeight;
-    final previousExtraAtTop = data.previousIsExtraAtTop;
-    data.previousExtraHeight = 0.0;
-    return new MyDragTarget<int>(
+    double nextTop = 0.0;
+    double nextBot = 0.0;
+    if (data.isExtraAtTop) {
+      nextTop = data.extraHeight;
+    } else {
+      nextBot = data.extraHeight;
+    }
+
+    return MyDragTarget<int>(
       builder: (BuildContext context, List candidateData, List rejectedData) {
-        return new Column(
+        return Column(
           children: <Widget>[
-            new SizedBox(
-              height: data.isExtraAtTop ? data.extraHeight : 0.0,
+            SizedBox(
+              height: nextTop,
             ),
             child,
-            new SizedBox(
-              height: data.isExtraAtTop ? 0.0 : data.extraHeight,
+            SizedBox(
+              height: nextBot,
             ),
           ],
         );
@@ -86,12 +92,12 @@ class DraggableListItem extends StatelessWidget {
 
   Widget _getFeedback(int index, BuildContext context) {
     var maxWidth = MediaQuery.of(context).size.width;
-    return new ConstrainedBox(
-      constraints: new BoxConstraints(maxWidth: maxWidth),
-      child: new Transform(
-        transform: new Matrix4.rotationZ(0.0),
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxWidth: maxWidth),
+      child: Transform(
+        transform: Matrix4.rotationZ(0.0),
         alignment: FractionalOffset.bottomRight,
-        child: new Material(
+        child: Material(
           child: child,
           elevation: dragElevation,
           color: Colors.transparent,
@@ -106,12 +112,10 @@ class Data {
   int index;
   double extraHeight;
   bool isExtraAtTop;
-  double previousExtraHeight;
-  bool previousIsExtraAtTop;
 
-  Data(this.index,
-      {this.isExtraAtTop = true,
-      this.extraHeight = 0.0,
-      this.previousIsExtraAtTop = true,
-      this.previousExtraHeight = 0.0});
+  Data(
+    this.index, {
+    this.isExtraAtTop = true,
+    this.extraHeight = 0.0,
+  });
 }

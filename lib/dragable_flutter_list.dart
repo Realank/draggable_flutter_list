@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/rendering.dart';
 import 'DraggableListItem.dart';
+import 'tools.dart';
 
 typedef Widget WidgetMaker<T>(BuildContext context, int index);
 
@@ -268,7 +269,10 @@ class _DragAndDropListState extends State<DragAndDropList> {
     final nextIndex = index;
     _currentIndex = index;
     final atTop = _currentScrollPos <= _currentMiddle.dy;
-    if (previousIndex == nextIndex && rows[previousIndex].isExtraAtTop == atTop) {
+
+    if (previousIndex == nextIndex &&
+        rows[nextIndex].isExtraAtTop == atTop &&
+        rows[nextIndex].extraHeight == dragHeight) {
       return;
     }
 
@@ -276,8 +280,6 @@ class _DragAndDropListState extends State<DragAndDropList> {
 
     if (previousIndex != null && previousIndex < rows.length) {
       if (rows[previousIndex].extraHeight > 0.1) {
-        rows[previousIndex].previousExtraHeight = rows[previousIndex].extraHeight;
-        rows[previousIndex].previousIsExtraAtTop = rows[previousIndex].isExtraAtTop;
         rows[previousIndex].extraHeight = 0.0;
         needUpdate = true;
       }
@@ -287,8 +289,6 @@ class _DragAndDropListState extends State<DragAndDropList> {
       if (dragHeight != null &&
           (absMinus(rows[nextIndex].extraHeight, dragHeight) > 0.1 ||
               rows[nextIndex].isExtraAtTop != atTop)) {
-        rows[nextIndex].previousExtraHeight = rows[nextIndex].extraHeight;
-        rows[nextIndex].previousIsExtraAtTop = rows[nextIndex].isExtraAtTop;
         rows[nextIndex].extraHeight = dragHeight;
         rows[nextIndex].isExtraAtTop = atTop;
         needUpdate = true;
@@ -298,14 +298,5 @@ class _DragAndDropListState extends State<DragAndDropList> {
     if (needUpdate) {
       setState(() {});
     }
-  }
-}
-
-double absMinus(double a, double b) {
-  double result = a - b;
-  if (result < 0) {
-    return -result;
-  } else {
-    return result;
   }
 }

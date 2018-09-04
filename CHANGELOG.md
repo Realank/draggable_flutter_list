@@ -6,5 +6,6 @@
 ## [0.1.5] - add scroll controller property
 ## [0.1.6] - add scroll controller property
 ## [0.1.7] - fix bug when can't drop to an index
-## [0.1.8] - fix draging index bug
-## [0.1.9] - pub.dartlang bug, can't analyze, re-submit
+## [0.1.8] - fix dragging index bug
+## [0.1.9] - pub.dartlang.org bug, can't analyze, re-submit
+## [0.2.0] - improve performance

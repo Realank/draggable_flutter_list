@@ -1,7 +1,8 @@
 # dragable_flutter_list
 
-a dragable flutter list optimized from [flutter_list_drag_and_drop](https://github.com/Norbert515/flutter_list_drag_and_drop)
+A flutter list view which can drag & move item to change order.
 
+- some codes come from [flutter_list_drag_and_drop](https://github.com/Norbert515/flutter_list_drag_and_drop)
 - fix flutter_list_drag_and_drop's dart version support
 - optimize data structure and api
 - drag and drop items in List View
