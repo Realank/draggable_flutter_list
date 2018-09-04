@@ -10,3 +10,6 @@
 ## [0.1.9] - pub.dartlang.org bug, can't analyze, re-submit
 ## [0.2.0] - improve performance
 ## [0.2.1] - fix dependencies
+## [0.2.2] - format files
+## [0.2.3] - format files
+## [1.0.0] - release stable version
