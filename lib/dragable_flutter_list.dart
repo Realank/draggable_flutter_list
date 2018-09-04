@@ -229,8 +229,7 @@ class _DragAndDropListState extends State<DragAndDropList> {
     setState(() {
       shouldScrollDown = false;
       shouldScrollUp = false;
-      rows[fromIndex].extraTop = 0.0;
-      rows[fromIndex].extraBot = 0.0;
+      rows[fromIndex].extraHeight = 0.0;
       if (_currentMiddle.dy >= _currentScrollPos) {
         widget.onDragFinish(_currentDraggingIndex, toIndex);
       } else {
@@ -264,26 +263,49 @@ class _DragAndDropListState extends State<DragAndDropList> {
     if (!widget.canBeDraggedTo(_currentDraggingIndex, index)) return;
 
     _currentMiddle = new Offset(0.0, middle);
-    print('canBeDraggedTo internal $_currentDraggingIndex -》 $index');
 
-    setState(() {
-      //reset placeholder
-      if (_currentIndex != null && _currentIndex < rows.length) {
-        rows[_currentIndex].extraBot = 0.0;
-        rows[_currentIndex].extraTop = 0.0;
-      }
+    final previousIndex = _currentIndex;
+    final nextIndex = index;
+    _currentIndex = index;
+    final atTop = _currentScrollPos <= _currentMiddle.dy;
+    if (previousIndex == nextIndex && rows[previousIndex].isExtraAtTop == atTop) {
+      return;
+    }
 
-      _currentIndex = index;
-      if (_currentIndex >= rows.length) {
-        return;
+    bool needUpdate = false;
+
+    if (previousIndex != null && previousIndex < rows.length) {
+      if (rows[previousIndex].extraHeight > 0.1) {
+        rows[previousIndex].previousExtraHeight = rows[previousIndex].extraHeight;
+        rows[previousIndex].previousIsExtraAtTop = rows[previousIndex].isExtraAtTop;
+        rows[previousIndex].extraHeight = 0.0;
+        needUpdate = true;
       }
-      if (_currentScrollPos > _currentMiddle.dy) {
-        rows[_currentIndex].extraBot = dragHeight;
-        rows[_currentIndex].extraTop = 0.0;
-      } else {
-        rows[_currentIndex].extraTop = dragHeight;
-        rows[_currentIndex].extraBot = 0.0;
+    }
+
+    if (nextIndex < rows.length) {
+      if (dragHeight != null &&
+          (absMinus(rows[nextIndex].extraHeight, dragHeight) > 0.1 ||
+              rows[nextIndex].isExtraAtTop != atTop)) {
+        rows[nextIndex].previousExtraHeight = rows[nextIndex].extraHeight;
+        rows[nextIndex].previousIsExtraAtTop = rows[nextIndex].isExtraAtTop;
+        rows[nextIndex].extraHeight = dragHeight;
+        rows[nextIndex].isExtraAtTop = atTop;
+        needUpdate = true;
       }
-    });
+    }
+
+    if (needUpdate) {
+      setState(() {});
+    }
+  }
+}
+
+double absMinus(double a, double b) {
+  double result = a - b;
+  if (result < 0) {
+    return -result;
+  } else {
+    return result;
   }
 }

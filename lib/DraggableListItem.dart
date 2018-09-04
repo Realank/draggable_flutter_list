@@ -60,16 +60,19 @@ class DraggableListItem extends StatelessWidget {
   }
 
   Widget _getListChild(BuildContext context) {
+    final previousExtraHeight = data.previousExtraHeight;
+    final previousExtraAtTop = data.previousIsExtraAtTop;
+    data.previousExtraHeight = 0.0;
     return new MyDragTarget<int>(
       builder: (BuildContext context, List candidateData, List rejectedData) {
         return new Column(
           children: <Widget>[
             new SizedBox(
-              height: data.extraTop,
+              height: data.isExtraAtTop ? data.extraHeight : 0.0,
             ),
             child,
             new SizedBox(
-              height: data.extraBot,
+              height: data.isExtraAtTop ? 0.0 : data.extraHeight,
             ),
           ],
         );
@@ -101,8 +104,14 @@ class DraggableListItem extends StatelessWidget {
 
 class Data {
   int index;
-  double extraTop;
-  double extraBot;
+  double extraHeight;
+  bool isExtraAtTop;
+  double previousExtraHeight;
+  bool previousIsExtraAtTop;
 
-  Data(this.index, {this.extraTop = 0.0, this.extraBot = 0.0});
+  Data(this.index,
+      {this.isExtraAtTop = true,
+      this.extraHeight = 0.0,
+      this.previousIsExtraAtTop = true,
+      this.previousExtraHeight = 0.0});
 }
