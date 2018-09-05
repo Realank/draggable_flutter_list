@@ -13,3 +13,4 @@
 ## [0.2.2] - format files
 ## [0.2.3] - format files
 ## [1.0.0] - release stable version
+## [1.0.1] - fix out of bounds issue

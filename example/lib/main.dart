@@ -34,20 +34,7 @@ class MyHomePageState extends State<MyHomePage> {
   List<String> items = [
     '0',
     '1sfsdfdsfdsfsafafsafdsafsadfdsfdsfsafafsafdsafsadfdsfdsfsafafsafdsafsadfdsfdsfsafafsafdsafsadfdsfdsfsafafsafdsafsadfdsfdsfsafafsafdsafsadfdsfdsfsafafsafdsafsadfdsfdsfsafafsafdsafsadfdsfdsfsafafsafdsafsadfdsfdsfsafafsafdsafsadfdsfdsfsafafsafdsafsadfsadf',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    '10',
-    '11',
-    '12',
-    '13',
-    '14',
-    '15',
+    'd'
   ];
   @override
   Widget build(BuildContext context) {

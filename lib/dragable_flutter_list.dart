@@ -95,8 +95,7 @@ class _DragAndDropListState extends State<DragAndDropList> {
       isScrolling = true;
       var scrollTo = widget.scrollController.offset - 12.0;
       widget.scrollController
-          .animateTo(scrollTo,
-              duration: new Duration(milliseconds: 74), curve: Curves.linear)
+          .animateTo(scrollTo, duration: new Duration(milliseconds: 74), curve: Curves.linear)
           .then((it) {
         updatePlaceholder();
         isScrolling = false;
@@ -111,8 +110,7 @@ class _DragAndDropListState extends State<DragAndDropList> {
       isScrolling = true;
       var scrollTo = widget.scrollController.offset + 12.0;
       widget.scrollController
-          .animateTo(scrollTo,
-              duration: new Duration(milliseconds: 75), curve: Curves.linear)
+          .animateTo(scrollTo, duration: new Duration(milliseconds: 75), curve: Curves.linear)
           .then((it) {
         updatePlaceholder();
         isScrolling = false;
@@ -142,8 +140,7 @@ class _DragAndDropListState extends State<DragAndDropList> {
     );
   }
 
-  Widget _getDraggableListItem(
-      BuildContext context2, int index, BuildContext context3) {
+  Widget _getDraggableListItem(BuildContext context2, int index, BuildContext context3) {
     var draggableListItem = new DraggableListItem(
       child: widget.itemBuilder(context2, rows[index].index),
       key: new ValueKey(rows[index]),
@@ -152,8 +149,7 @@ class _DragAndDropListState extends State<DragAndDropList> {
       dragElevation: widget.dragElevation,
       draggedHeight: dragHeight,
       canDrag: widget.canDrag,
-      onDragStarted:
-          (double draggedHeight, double globalTopPositionOfDraggedItem) {
+      onDragStarted: (double draggedHeight, double globalTopPositionOfDraggedItem) {
         _currentDraggingIndex = index;
         RenderBox rend = context3.findRenderObject();
         double start = rend.localToGlobal(new Offset(0.0, 0.0)).dy;
@@ -162,8 +158,7 @@ class _DragAndDropListState extends State<DragAndDropList> {
         didJustStartDragging = true;
         _currentScrollPos = start;
 
-        middleOfItemInGlobalPosition =
-            globalTopPositionOfDraggedItem + draggedHeight / 2;
+        middleOfItemInGlobalPosition = globalTopPositionOfDraggedItem + draggedHeight / 2;
 
         sliverStartPos = start;
 
@@ -235,7 +230,10 @@ class _DragAndDropListState extends State<DragAndDropList> {
     setState(() {
       shouldScrollDown = false;
       shouldScrollUp = false;
-      rows[fromIndex].extraHeight = 0.0;
+      if (fromIndex < rows.length) {
+        rows[fromIndex].extraHeight = 0.0;
+      }
+
       if (_currentMiddle.dy >= _currentScrollPos) {
         widget.onDragFinish(_currentDraggingIndex, toIndex);
       } else {
@@ -258,9 +256,7 @@ class _DragAndDropListState extends State<DragAndDropList> {
         var bufferChild = it.childAfter(currentChild);
         if (bufferChild == null) break;
         currentChild = bufferChild;
-        buffer = it.childMainAxisPosition(currentChild) +
-            currentChild.size.height +
-            sliverStartPos;
+        buffer = it.childMainAxisPosition(currentChild) + currentChild.size.height + sliverStartPos;
       }
     }
     assert(currentChild != null);
@@ -277,7 +273,8 @@ class _DragAndDropListState extends State<DragAndDropList> {
     _currentIndex = index;
     final atTop = _currentScrollPos <= _currentMiddle.dy;
 
-    if (previousIndex == nextIndex &&
+    if (nextIndex < rows.length &&
+        previousIndex == nextIndex &&
         rows[nextIndex].isExtraAtTop == atTop &&
         rows[nextIndex].extraHeight == dragHeight) {
       return;
