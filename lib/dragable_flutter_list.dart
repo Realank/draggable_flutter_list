@@ -234,7 +234,7 @@ class _DragAndDropListState extends State<DragAndDropList> {
         rows[fromIndex].extraHeight = 0.0;
       }
 
-      if (_currentMiddle.dy >= _currentScrollPos) {
+      if (_currentMiddle.dy >= _currentScrollPos || rows.length == 0) {
         widget.onDragFinish(_currentDraggingIndex, toIndex);
       } else {
         widget.onDragFinish(_currentDraggingIndex, toIndex + 1);
@@ -250,6 +250,10 @@ class _DragAndDropListState extends State<DragAndDropList> {
     RenderSliverList it = renderSliverContext.findRenderObject();
     double buffer = sliverStartPos;
     RenderBox currentChild = it.firstChild;
+    print('current child $currentChild');
+    if (currentChild == null) {
+      return;
+    }
     buffer += it.childMainAxisPosition(currentChild) + currentChild.size.height;
     while (_currentScrollPos > buffer) {
       if (currentChild != null) {
@@ -259,7 +263,6 @@ class _DragAndDropListState extends State<DragAndDropList> {
         buffer = it.childMainAxisPosition(currentChild) + currentChild.size.height + sliverStartPos;
       }
     }
-    assert(currentChild != null);
     double middle = buffer - currentChild.size.height / 2;
 
     int index = it.indexOf(currentChild);

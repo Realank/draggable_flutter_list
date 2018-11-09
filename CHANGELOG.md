@@ -14,3 +14,4 @@
 ## [0.2.3] - format files
 ## [1.0.0] - release stable version
 ## [1.0.1] - fix out of bounds issue
+## [1.0.2] - fix only one cell disappear when dragging issue
