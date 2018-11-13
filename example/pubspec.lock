@@ -36,13 +36,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.2"
-  dragable_flutter_list:
+  draggable_flutter_list:
     dependency: "direct main"
     description:
       path: ".."
       relative: true
     source: path
-    version: "1.0.1"
+    version: "1.0.2"
   flutter:
     dependency: "direct main"
     description: flutter

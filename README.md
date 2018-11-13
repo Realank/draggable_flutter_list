@@ -9,6 +9,9 @@ A flutter list view which can drag & move item to change order.
 - drag and drop are optional for specific item
 - animate when dragging
 
+### *Please use *draggable_flutter_list* for your dependency,
+The old name dragable_flutter_list (lack g) has been deprecated
+
 ![](./demo.gif)
 
 ## Usage

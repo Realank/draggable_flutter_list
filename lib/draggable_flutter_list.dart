@@ -1,9 +1,9 @@
-library dragable_flutter_list;
+library draggable_flutter_list;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/rendering.dart';
-import 'DraggableListItem.dart';
+import 'draggable_list_item.dart';
 import 'tools.dart';
 
 typedef Widget WidgetMaker<T>(BuildContext context, int index);

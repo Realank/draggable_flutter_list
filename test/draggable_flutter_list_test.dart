@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
-import 'package:dragable_flutter_list/draggable_flutter_list.dart';
+import 'package:draggable_flutter_list/draggable_flutter_list.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

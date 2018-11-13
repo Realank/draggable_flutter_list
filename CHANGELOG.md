@@ -15,3 +15,4 @@
 ## [1.0.0] - release stable version
 ## [1.0.1] - fix out of bounds issue
 ## [1.0.2] - fix only one cell disappear when dragging issue
+## [1.0.3] - typo packages name, dragable_flutter_list -> draggable_flutter_list

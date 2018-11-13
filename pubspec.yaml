@@ -1,6 +1,6 @@
 name: draggable_flutter_list
 description: a flutter list view which can drag & move item to change order.
-version: 1.0.2
+version: 1.0.3
 author: Realank <realank@126.com>
 homepage: https://github.com/Realank/draggable_flutter_list
 
