@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/dragable_flutter_list.iml" filepath="$PROJECT_DIR$/dragable_flutter_list.iml" />
+      <module fileurl="file://$PROJECT_DIR$/draggable_flutter_list.iml" filepath="$PROJECT_DIR$/draggable_flutter_list.iml" />
     </modules>
   </component>
 </project>

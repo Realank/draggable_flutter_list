@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dragable_flutter_list/dragable_flutter_list.dart';
+import 'package:dragable_flutter_list/draggable_flutter_list.dart';
 
 void main() {
   runApp(new TestApp());

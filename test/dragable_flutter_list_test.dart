@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
-import 'package:dragable_flutter_list/dragable_flutter_list.dart';
+import 'package:dragable_flutter_list/draggable_flutter_list.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -125,8 +125,7 @@ void testSwap() {
 
 /// Dispatch a pointer down / pointer up sequence at the given location with
 /// a delay of [kLongPressTimeout] + [kPressTimeout] between the two events.
-Future<Null> longPressDrag(
-    Finder finder, WidgetTester tester, Offset dragOffset) {
+Future<Null> longPressDrag(Finder finder, WidgetTester tester, Offset dragOffset) {
   Offset location = tester.getCenter(finder);
   return TestAsyncUtils.guard(() async {
     final TestGesture gesture = await tester.startGesture(location);
@@ -140,8 +139,7 @@ Future<Null> longPressDrag(
 
 /// Dispatch a pointer down / pointer up sequence at the given location with
 /// a delay of [kLongPressTimeout] + [kPressTimeout] between the two events.
-Future<Null> longPressDragOffset(
-    Offset location, WidgetTester tester, Offset dragOffset) {
+Future<Null> longPressDragOffset(Offset location, WidgetTester tester, Offset dragOffset) {
   return TestAsyncUtils.guard(() async {
     final TestGesture gesture = await tester.startGesture(location);
     await tester.pump(kLongPressTimeout + kPressTimeout);
