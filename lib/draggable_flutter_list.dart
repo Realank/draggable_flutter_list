@@ -130,6 +130,7 @@ class _DragAndDropListState extends State<DragAndDropList> {
     return new LayoutBuilder(
       builder: (BuildContext context3, constr) {
         return new ListView.builder(
+          shrinkWrap: true,
           itemBuilder: (BuildContext context2, int index) {
             return _getDraggableListItem(context2, index, context3);
           },
